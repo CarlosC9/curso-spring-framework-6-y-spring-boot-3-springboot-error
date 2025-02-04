@@ -1,5 +1,6 @@
 package com.carlos.curso.springboot.error.springbooterror.controllers;
 
+import com.carlos.curso.springboot.error.springbooterror.exceptions.UserNotFoundException;
 import com.carlos.curso.springboot.error.springbooterror.models.domain.User;
 import com.carlos.curso.springboot.error.springbooterror.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class AppController {
     @PathVariable Long id
   ) {
     User user = this.userService.findById(id);
+    if (user == null) {
+      throw new UserNotFoundException("Error el usuario no existe");
+    }
     System.out.println(user.getLastName());
     return user;
   }
