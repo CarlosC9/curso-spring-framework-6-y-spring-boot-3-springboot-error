@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/app")
 public class AppController {
@@ -31,11 +33,9 @@ public class AppController {
   public User show(
     @PathVariable Long id
   ) {
-    User user = this.userService.findById(id);
-    if (user == null) {
-      throw new UserNotFoundException("Error el usuario no existe");
-    }
-    System.out.println(user.getLastName());
+    User user = this.userService.findById(id)
+      .orElseThrow(() -> new UserNotFoundException("Error el usuario no existe"));
+//    System.out.println(user.getLastName());
     return user;
   }
 
