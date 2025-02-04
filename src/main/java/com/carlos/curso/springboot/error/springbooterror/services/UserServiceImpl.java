@@ -1,9 +1,10 @@
 package com.carlos.curso.springboot.error.springbooterror.services;
 
 import com.carlos.curso.springboot.error.springbooterror.models.domain.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,14 +13,10 @@ public class UserServiceImpl implements UserService {
 
   private List<User> users;
 
-  public UserServiceImpl() {
-    this.users = Arrays.asList(
-      new User(1L, "Pepe", "Gonzalez"),
-      new User(2L, "Andres", "Mena"),
-      new User(3L, "María", "Perez"),
-      new User(4L, "Josefa", "Ramirez"),
-      new User(5L, "Ale", "Gutierrez")
-    );
+  @Autowired
+  @Qualifier("getUsers")
+  public void setUsers(List<User> users) {
+    this.users = users;
   }
 
   @Override
